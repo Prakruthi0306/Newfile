@@ -1,31 +1,39 @@
-pipeline{
-  environment{
-    registry="prakruthi0306/mkdocs"
-    registryCredentials= 'DockerCredentials'
-    dockerImage= ''
-  }
-  agent any 
-  stages {
-    stage ('Cloning Git'){
-      steps {
-        git 'https://github.com/Prakruthi0306/Newfile.git'
-      }
+pipeline {
+    agent any 
+    environment {
+    DOCKERHUB_CREDENTIALS = credentials('DockerCredentials')
     }
-    stage('Build image'){
-      steps{
-        script{
-          dockerImage = docker build -t demo
+    stages { 
+        stage('SCM Checkout') {
+            steps{
+            git 'https://github.com/ravdy/nodejs-demo.git'
+            }
         }
-      }
-    }
-    stage('Deploy image') {
-      steps{
-        script{
-          docker.withRegistry('',registryCredentials ){
-            dockerImage.push()
-          }
+
+        stage('Build docker image') {
+            steps {  
+                sh 'docker build -t valaxy/nodeapp:$BUILD_NUMBER .'
+            }
         }
-      }
-    }
-  }
+        stage('login to dockerhub') {
+            steps{
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage('push image') {
+            steps{
+                sh 'docker push valaxy/nodeapp:$BUILD_NUMBER'
+            }
+        }
 }
+post {
+        always {
+            sh 'docker logout'
+        }
+    }
+}
+
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
