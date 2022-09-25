@@ -6,7 +6,7 @@ pipeline {
     stages { 
         stage('SCM Checkout') {
             steps{
-            git 'https://github.com/ravdy/nodejs-demo.git'
+            git 'https://github.com/Prakruthi0306/Newfile.git'
             }
         }
 
@@ -33,7 +33,3 @@ post {
     }
 }
 
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
