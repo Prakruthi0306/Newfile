@@ -14,7 +14,7 @@ pipeline{
     stage('Build image'){
       steps{
         script{
-          dockerImage = docker.image("mysql:latest")
+          dockerImage = docker build -t demo:latest .
         }
       }
     }
