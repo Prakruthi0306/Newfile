@@ -1,9 +1,9 @@
 pipeline{
 
-	agent {label 'linux'}
+	agent any
 
 	environment {
-		DOCKERHUB_CREDENTIALS=credentials('DockerCredentials')
+		DOCKERHUB_CREDENTIALS=credentials('jenkinsdocker')
 	}
 
 	stages {
@@ -18,7 +18,7 @@ pipeline{
 		stage('Build') {
 
 			steps {
-				sh 'docker build -t thetips4you/nodeapp_test:latest .'
+				sh 'docker build -t prakruthi0306/dp-alpine:latest .'
 			}
 		}
 
@@ -32,7 +32,7 @@ pipeline{
 		stage('Push') {
 
 			steps {
-				sh 'docker push thetips4you/nodeapp_test:latest'
+				sh 'docker push prakruthi0306/dp-alpine:latest'
 			}
 		}
 	}
