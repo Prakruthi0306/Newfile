@@ -12,7 +12,7 @@ pipeline {
 
         stage('Build docker image') {
             steps {  
-                bat 'docker build .'
+                sh 'docker build .'
             }
         }
         stage('login to dockerhub') {
